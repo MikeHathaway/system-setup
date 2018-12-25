@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eux
+xrdb -merge /developer/.Xresources
+/usr/bin/urxvt -title "Shell"
