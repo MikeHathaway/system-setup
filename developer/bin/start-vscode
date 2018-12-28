@@ -1,4 +1,0 @@
-#!/bin/bash
-xrdb -merge /developer/.Xresources
-/usr/bin/code "$@"
-

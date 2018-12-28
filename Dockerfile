@@ -2,68 +2,35 @@ FROM ubuntu:18.04
 
 MAINTAINER Mike Hathaway
 
-ENV LANG=C.UTF-8 \ 
-DEBIAN_FRONTEND=noninteractive \ 
-DEBCONF_NONINTERACTIVE_SEEN=true \ 
-VSCODE=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable
+ENV DISPLAY=10.0.75.1:0.0	
+ENV USER=dev
+ENV GROUP=developers
 
-# get add-apt-repository
-RUN apt-get update
-RUN apt-get -y --no-install-recommends install software-properties-common curl gnupg \
-apt-transport-https
 
-# add nodejs ppa
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN groupadd $GROUP
+RUN useradd -m -G $GROUP $USER
 
-# update apt cache
-RUN apt-get update
+RUN apt-get update \
+ && apt-get install -y curl apt-transport-https libgtk2.0-0 libxss1 libasound2 xauth x11-apps dbus git gpg
 
-# vscode dependencies
-RUN apt-get -y --no-install-recommends install libc6-dev libgtk2.0-0 libgtk-3-0 libpango-1.0-0 libcairo2 libfontconfig1 libgconf2-4 libnss3 libasound2 libxtst6 unzip libglib2.0-bin libcanberra-gtk-module libgl1-mesa-glx curl build-essential gettext libstdc++6 software-properties-common wget git xterm automake libtool autogen nodejs libnotify-bin aspell aspell-en htop git emacs mono-complete gvfs-bin libxss1 rxvt-unicode-256color x11-xserver-utils sudo vim libxkbfile1 libsecret-1-0
+RUN mkdir /var/run/dbus
 
-# update npm
-RUN npm install npm -g
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
+ && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
+ && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 
-# install vscode
-# RUN wget -O vscode-amd64.deb  https://go.microsoft.com/fwlink/?LinkID=760868
-# RUN dpkg -i vscode-amd64.deb
-# RUN rm vscode-amd64.deb
+RUN apt-get update \
+ && apt-get install -y code \
+ && apt-get install -f
 
-RUN echo 'Installing VsCode' && \ 
-curl -o vscode.deb -J -L "$VSCODE" && \ 
-dpkg -i vscode.deb && rm -f vscode.deb
+RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
+ && cp /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0 /usr/share/code/ \
+ && sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/share/code/libxcb.so.1 \
+ && sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /usr/share/code/libxcb.so.1.1.0
 
-# create our developer user
-workdir /root
-run groupadd -r developer -g 1000
-run useradd -u 1000 -r -g developer -d /developer -s /bin/bash -c "Software Developer" developer
-copy /developer /developer
-workdir /developer
 
-# enable sudo for developer
-run echo "developer ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/developer
+USER $USER
 
-# fix developer permissions
-run chmod +x /developer/bin/*
-run chown -R developer:developer /developer
-user developer
+WORKDIR /home/$USER
 
-# setup our ports
-expose 5000
-expose 3000
-expose 3001
-
-# set environment variables
-env PATH /developer/.npm/bin:$PATH
-env NODE_PATH /developer/.npm/lib/node_modules:$NODE_PATH
-env SHELL /bin/bash
-
-# mount points
-volume ["/developer/.config/Code"]
-volume ["/developer/.vscode"]
-volume ["/developer/.ssh"]
-volume ["/developer/project"]
-
-# start vscode
-entrypoint ["/developer/bin/start-vscode"]
-
+ENTRYPOINT /usr/bin/code --verbose
