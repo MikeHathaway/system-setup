@@ -13,6 +13,9 @@ RUN useradd -m -G $GROUP $USER
 RUN apt-get update \
  && apt-get install -y curl apt-transport-https libgtk2.0-0 libxss1 libasound2 xauth x11-apps dbus git gpg
 
+# add nodejs ppa
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
 RUN mkdir /var/run/dbus
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
@@ -21,7 +24,14 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > mic
 
 RUN apt-get update \
  && apt-get install -y code \
+ && apt-get install -y nodejs \
  && apt-get install -f
+
+# update npm
+RUN npm install npm -g
+
+# Install Truffle & Other Web3 Dependencies
+RUN npm install -g truffle ganache-cli
 
 RUN cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /usr/share/code/ \
  && cp /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0 /usr/share/code/ \
