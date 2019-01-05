@@ -9,12 +9,12 @@ echo "Installing node"
 sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
     && sudo apt-get install -y nodejs
 
-mkdir "${HOME}/.npm-packages"
-sudo echo 'prefix=${HOME}/.npm-packages' >> ~/.npmrc
-
-# Only write to ~/.bashrc on first setup
+# Only write to config files on first setup
 if [ $2 -eq true ]
   then
+
+mkdir "${HOME}/.npm-packages"
+sudo echo 'prefix=${HOME}/.npm-packages' >> ~/.npmrc
 
 NPM_CONFIG=$(cat <<"EOF"
 
@@ -35,7 +35,7 @@ fi
 
 # Install truffle
 echo "Starting installation of crypto tools"
-npm install -g truffle 
+npm install -g truffle ganache-cli
 
 fi
 
