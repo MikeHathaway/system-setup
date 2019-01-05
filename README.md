@@ -24,3 +24,6 @@ This is a guide to setting up a development environment in QubesOS v4
 4. OPTIONAL: Alias Docker Run Command
 * Add an entry to ~/.bashrc file pointing at the previous docker run command: `alias code='sudo docker run...'`
 
+### Install Scripts
+- `chmod +x ./system-setup.sh && ./system-setup.sh 'dev'`
+
