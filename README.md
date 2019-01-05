@@ -16,8 +16,11 @@ This is a guide to setting up a development environment in QubesOS v4
 
 ## Running Docker in Qubes:
 1. [Add volume for sharing files between container and host VM](https://www.digitalocean.com/community/tutorials/how-to-share-data-between-the-docker-container-and-the-host)
-2. Start Docker Container: `sudo docker run -d --rm -e "DISPLAY=$DISPLAY" -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/Projects:/home/dev code`
+2. Start Docker Container: `sudo docker run -d /
+				--rm -e "DISPLAY=$DISPLAY" /
+				-v /tmp/.X11-unix:/tmp/.X11-unix /
+				-v ~/Projects:/home/dev code`
 3. [Persist container images]
 4. OPTIONAL: Alias Docker Run Command
-* Add an entry to ~/.bashrc file pointing at the previous docker run command: `alias=sudo docker run...`
+* Add an entry to ~/.bashrc file pointing at the previous docker run command: `alias code='sudo docker run...'`
 

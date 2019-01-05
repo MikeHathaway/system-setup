@@ -1,0 +1,27 @@
+version: '2'
+services:
+  node:
+    image: "node:8"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    expose:
+      - "8081"
+    command: "npm start"
+  # truffle:
+  #   image: jitsejan/testrpc
+  #   command: bash -c "testrpc -h 0.0.0.0"
+  #   ports:
+  #     - "7000:8545"
+  # ganache:
+  #   image: trufflesuite/ganache-cli
+  #   command: bash
+  #   stdin_open: true
+  #   tty: true
+  #   ports:
+  #     - "7001:8080"
+  #   volumes:
+  #     - ./:/code
