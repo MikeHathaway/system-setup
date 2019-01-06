@@ -3,7 +3,7 @@ set -eux
 
 sysInit = $1
 
-if [ sysInit -eq true]
+if [ ${sysInit} -eq true ]
     then
         sudo echo "alias node='sudo docker pull node && sudo docker run -it node'" >> ~/.bashrc
         sudo echo `###################### 
