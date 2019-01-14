@@ -27,3 +27,10 @@ This is a guide to setting up a development environment in QubesOS v4
 ### Install Scripts
 - `chmod +x ./system-setup.sh && ./system-setup.sh dev false`
 
+### Setup Trezor
+https://github.com/trezor/trezor-core/issues/167
+https://wiki.trezor.io/Qubes_OS
+
+
+### Install Steam
+https://forums.whonix.org/t/playing-dota2-with-torified-steamos-by-qubes-whonix/6584

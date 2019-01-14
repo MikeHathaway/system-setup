@@ -4,10 +4,10 @@ set -eux
 if [ $1 == 'dev' ]
   then
 
-# Install nodejs
-echo "Installing node"
-sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
-    && sudo apt-get install -y nodejs
+  # Install nodejs
+  echo "Installing node"
+  sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
+      && sudo apt-get install -y nodejs
 
 # Only write to config files on first setup
 if [ $2 -eq true ]
