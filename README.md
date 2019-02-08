@@ -25,7 +25,8 @@ This is a guide to setting up a development environment in QubesOS v4
 * Add an entry to ~/.bashrc file pointing at the previous docker run command: `alias code='sudo docker run...'`
 
 ### Install Scripts
-- `chmod +x ./system-setup.sh && ./system-setup.sh dev false`
+* Pass flag indicating whether this during an appVM's first configuration
+- `chmod +x ./system-setup.sh && ./system-setup.sh dev <true|false>`
 
 ### Setup Trezor
 https://github.com/trezor/trezor-core/issues/167

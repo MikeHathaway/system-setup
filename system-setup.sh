@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eux
 
+envType="$1"
+sysFirstInit="$2"
 
 function systemInit()
 {
@@ -44,17 +46,30 @@ EOF
 echo "${NPM_CONFIG}" >> ~/.bashrc
 }
 
+function configureShell()
+{
+
+touch ~/.bash_aliases
+
+ALIASES=$(cat <<"EOF"
+
+#####################
+# Alias for running vscode in docker image from ~/Projects directory on host
+alias code='sudo docker pull mikehathaway/qubes-dev:latest && sudo docker run -$
+
+alias docker-node='sudo docker pull node && sudo docker run -it node'
+
+alias dev='bash ~/Projects/system-setup/sytem-setup.sh dev false'
+EOF
+)
+
+echo "${NPM_CONFIG}" >> ~/.bash_aliases
+}
 
 
 
 
-
-
-
-
-
-
-if [ $1 == 'dev' ]
+if [ $envType == 'dev' ]
   then
 
   ## Install nodejs
@@ -63,22 +78,25 @@ if [ $1 == 'dev' ]
   sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
       && sudo apt-get install -y nodejs
 
-# Only write to config files on first setup
-if [ $2 -eq true ]
-  then
-
-  echo "Initalizing System"
-  systemInit
-
-  echo "Configuring NPM"
-  configureNPM
-
-fi  
-
   # Install truffle
   echo "Starting installation of crypto tools"
   npm install -g truffle ganache-cli
 
+
+  # Only write to config files on first setup
+  if [ $sysFirstInit == true ]
+    then
+
+    echo "Install dependencies"
+    systemInit
+
+    echo "Configuring NPM"
+    configureNPM
+
+    echo "Configring system aliases"
+    configureShell
+
+  fi  
 fi
 
 
