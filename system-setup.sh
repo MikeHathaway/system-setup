@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -ex
 
 envType="$1"
 sysFirstInit="$2"
@@ -63,7 +63,44 @@ alias dev='bash ~/Projects/system-setup/sytem-setup.sh dev false'
 EOF
 )
 
-echo "${NPM_CONFIG}" >> ~/.bash_aliases
+echo "${ALIASES}" >> ~/.bash_aliases
+}
+
+
+function configureVim()
+{
+
+sudo curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+touch ~/.vim/plugins.vim
+
+PLUGINS=$(cat << "EOF"
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'w0rp/ale'
+
+call plug#end()
+EOF
+)
+
+echo "${PLUGINS}" >> ~/.vim/plugins.vim
+
+touch ~/.vim/.vimrc 
+
+echo "so ~/.vim/plugins.vim" >> ~/.vim/.vimrc
+
 }
 
 
@@ -92,6 +129,9 @@ if [ $envType == 'dev' ]
 
     echo "Install dependencies"
     systemInit
+    
+    echo "Configuring Vim"
+    configureVim
 
     echo "Configuring NPM"
     configureNPM
@@ -102,4 +142,4 @@ if [ $envType == 'dev' ]
   fi  
 fi
 
-
+"$@"

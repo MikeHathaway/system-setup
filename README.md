@@ -28,6 +28,9 @@ This is a guide to setting up a development environment in QubesOS v4
 * Pass flag indicating whether this during an appVM's first configuration
 - `chmod +x ./system-setup.sh && ./system-setup.sh dev <true|false>`
 
+### Setting up Vim
+- List of plugins:  https://medium.com/@huntie/10-essential-vim-plugins-for-2018-39957190b7a9
+
 ### Setup Trezor
 https://github.com/trezor/trezor-core/issues/167
 https://wiki.trezor.io/Qubes_OS
