@@ -4,6 +4,24 @@ set -ex
 envType="$1"
 sysFirstInit="$2"
 
+# Only write to config files on first setup
+if [ $sysFirstInit == true ]
+  then
+
+    echo "Install dependencies"
+    bash ./system-modules.sh installDeps
+    
+    echo "Configuring Vim"
+    bash ./system-modules.sh configureVim
+
+    echo "Configuring NPM"
+    bash ./system-modules.sh configureNPM
+
+    echo "Configring system aliases"
+    bash ./system-modules.sh configureShell
+fi
+
+
 if [ $envType == 'dev' ]
   then
 
@@ -18,24 +36,5 @@ if [ $envType == 'dev' ]
   npm install -g truffle ganache-cli
 
   # Install react-native-cli
-  npm i -g react-native-cli
-
-
-  # Only write to config files on first setup
-  if [ $sysFirstInit == true ]
-    then
-
-    echo "Install dependencies"
-    bash ./system-modules.sh installDeps
-    
-    echo "Configuring Vim"
-    bash ./system-modules.sh configureVim
-
-    echo "Configuring NPM"
-    bash ./system-modules.sh configureNPM
-
-    echo "Configring system aliases"
-    bash ./system-modules.sh configureShell
-
-  fi  
+  npm i -g react-native-cli 
 fi

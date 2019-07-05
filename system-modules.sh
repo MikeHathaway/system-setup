@@ -26,7 +26,7 @@ function installDeps()
   echo "Installing Shell"
 
   # Install shell  
-  sudo apt-get install terminator
+  sudo apt-get install tmux terminator
 }
 
 
@@ -70,7 +70,7 @@ alias dev='bash ~/Projects/system-setup/sytem-setup.sh dev false'
 EOF
 )
 
-echo "${ALIASES}" >> ~/.bash_aliases
+echo "${ALIASES}" >> ~/.bashrc
 }
 
 
@@ -104,10 +104,12 @@ EOF
 
 echo "${PLUGINS}" > ~/.vim/plugins.vim
 
-touch ~/.vim/.vimrc 
+touch ~/.vimrc 
 
 echo "source ~/.vim/plugins.vim" > ~/.vim/.vimrc
 
+# Install Vim PLugins
+vim +PlugIntstall +qall
 }
 
 
