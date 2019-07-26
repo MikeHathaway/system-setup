@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/user/Projects/system-setup'
+let g:netrw_dirhist_2='/home/user/Projects/system-setup/.git'
+let g:netrw_dirhist_3='/home/user/Projects/system-setup'
+let g:netrw_dirhist_4='/home/user'
+let g:netrw_dirhist_5='/home/user/.pki'
+let g:netrw_dirhist_6='/home/user/.pki/nssdb'
+let g:netrw_dirhist_7='/home/user/Projects/system-setup/system-modules'
+let g:netrw_dirhist_8='/home/user'
+let g:netrw_dirhist_9='/home/user/Projects/Matchmaker'
