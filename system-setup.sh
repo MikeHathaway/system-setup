@@ -36,5 +36,5 @@ if [ $envType == 'dev' ]
   npm install -g truffle ganache-cli
 
   # Install react-native-cli
-  npm i -g react-native-cli 
+  npm i -g expo-cli 
 fi
