@@ -31,9 +31,12 @@ if [ $envType == 'dev' ]
   sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
       && sudo apt-get install -y nodejs
 
+  # Install Typescript
+  npm i -g typescript
+
   # Install truffle
   echo "Starting installation of crypto tools"
-  npm install -g truffle ganache-cli
+  npm install -g truffle ganache-cli ethers
 
   # Install Expo for React Native
   npm i -g expo expo-cli 

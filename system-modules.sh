@@ -24,8 +24,8 @@ function installDeps()
 
   echo "Installing Shell"
 
-  # Install shell  
-  sudo apt-get install tmux terminator
+  # Install tmux  
+  sudo apt-get install tmux
 }
 
 
@@ -55,6 +55,7 @@ function configureShell()
 
 touch ~/.bash_aliases
 
+echo "ADDING ALIASES"
 ALIASES=$(cat <<"EOF"
 #####################
 # Alias for running vscode in docker image from ~/Projects directory on host
@@ -66,8 +67,18 @@ alias dev='bash ~/Projects/system-setup/sytem-setup.sh dev false'
 export PS1="\e[0;31m[\u@\h \W]\$ \e[m"
 EOF
 )
-
 echo "${ALIASES}" >> ~/.bashrc
+
+echo "UPDATING XTERM CONFIG"
+XTERM_CONFIG=$(cat << "EOF"
+xterm*faceName: Monospace
+xterm*faceSize: 11
+EOF
+)
+echo "${XTERM_CONFIG}" >> ~/.Xresources
+
+echo "Merging Updates to ~/.Xresources" 
+xrdb -merge ~/.Xresources
 }
 
 
