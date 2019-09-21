@@ -16,7 +16,7 @@ au BufWrite /private/etc/pw.* set nowritebackup nobackup
 let skip_defaults_vim=1
 
 " set global clipboard
-" set clipboard^=unnamedplus
+set clipboard=unnamedplus
 
 " set indenting to 4 spaces
 set shiftwidth=4
@@ -44,9 +44,11 @@ let NERDTreeShowHidden=1
 syntax enable
 set background=dark
 " let g:solarized_visibility = "high"
-" let g:solarized_contrast = "high"
-let g:solarized_termcolors = 16
-colorscheme solarized8
+let g:solarized_contrast = "high"
+let g:solarized_bold = 0
+let g:solarized_termtrans = 1
+" let g:solarized_termcolors = 16
+colorscheme solarized
 
 
 let g:airline_solarized_bg='dark'
@@ -55,3 +57,5 @@ let g:airline_solarized_bg='dark'
 set nu
 syntax on
 
+" Allow Markdown previewing
+let vim_markdown_preview_github=1

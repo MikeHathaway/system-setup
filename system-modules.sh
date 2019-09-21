@@ -26,6 +26,9 @@ function installDeps()
 
   # Install tmux  
   sudo apt-get install tmux
+
+  # Install Markdown preview dependencies
+  sudo apt-get install grip xdotool
 }
 
 
