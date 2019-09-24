@@ -38,6 +38,4 @@ if [ $envType == 'dev' ]
   echo "Starting installation of crypto tools"
   npm install -g truffle ganache-cli ethers
 
-  # Install Expo for React Native
-  npm i -g expo expo-cli 
 fi

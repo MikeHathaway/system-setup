@@ -12,6 +12,9 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+" Toggle Comments
+Plug 'tpope/vim-commentary'
+
 " Configure language syntax
 Plug 'pangloss/vim-javascript'
 
