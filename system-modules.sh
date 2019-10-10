@@ -29,6 +29,12 @@ function installDeps()
 
   # Install Markdown preview dependencies
   sudo apt-get install grip xdotool
+
+  # Install Python-dep
+  sudo apt-get install python3-pip
+
+  # Removed unneeded system modules
+  sudo apt autoremove
 }
 
 
