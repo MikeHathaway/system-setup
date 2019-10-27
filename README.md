@@ -26,7 +26,8 @@ This is a guide to setting up a development environment in QubesOS v4
 
 ### Install Scripts
 * Pass flag indicating whether this during an appVM's first configuration
-- `chmod +x ./system-setup.sh && ./system-setup.sh dev <true|false>`
+- `chmod +x ./system-setup.sh && ./system-setup.sh init `
+- On subsequent startups, can siple execute `dev <crypto|js|python>` list of arguments
 
 ### Setting up Vim
 - List of plugins:  https://medium.com/@huntie/10-essential-vim-plugins-for-2018-39957190b7a9

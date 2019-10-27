@@ -30,9 +30,6 @@ function installDeps()
   # Install Markdown preview dependencies
   sudo apt-get install grip xdotool
 
-  # Install Python-dep
-  sudo apt-get install python3-pip
-
   # Removed unneeded system modules
   sudo apt autoremove
 }
@@ -70,7 +67,7 @@ ALIASES=$(cat <<"EOF"
 # Alias for running vscode in docker image from ~/Projects directory on host
 alias code='sudo docker pull mikehathaway/qubes-dev:latest && sudo docker run -$
 alias docker-node='sudo docker pull node && sudo docker run -it node'
-alias dev='bash ~/Projects/system-setup/sytem-setup.sh dev false'
+alias dev='bash ~/Projects/system-setup/sytem-setup.sh'
 
 # Add Colors
 export PS1="\e[0;31m[\u@\h \W]\$ \e[m"

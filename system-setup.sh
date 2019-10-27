@@ -1,11 +1,11 @@
 #!/bin/bash
 set -ex
 
-envType="$1"
-sysFirstInit="$2"
+sysFirstInit="$1"
+shift
 
 # Only write to config files on first setup
-if [ $sysFirstInit == true ]
+if [ $sysFirstInit == init ]
   then
 
     echo "Install dependencies"
@@ -21,21 +21,43 @@ if [ $sysFirstInit == true ]
     bash ./system-modules.sh configureShell
 fi
 
+for i
+  do
 
-if [ $envType == 'dev' ]
-  then
+	if [ "$i" == 'crypto' ]
+	  then
 
-  ## Install nodejs
-  # This is installed everytime the work vm starts up
-  echo "Installing node"
-  sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
-      && sudo apt-get install -y nodejs
+	  # Install truffle
+	  echo "Starting installation of crypto tools"
+	  npm install -g truffle ganache-cli 
 
-  # Install Typescript
-  npm i -g typescript
+	fi 
 
-  # Install truffle
-  echo "Starting installation of crypto tools"
-  npm install -g truffle ganache-cli ethers
+	# Install Javascript dev dependencies
+	if [ "$i" == 'js' ]
+	then
 
-fi
+	  ## Install nodejs
+	  # This is installed everytime the work vm starts up
+	  echo "Installing node"
+	  sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - \
+		  && sudo apt-get install -y nodejs
+
+	  # Install Typescript
+	  npm i -g typescript
+	  
+	  # Install web3 client
+	  npm i -g ethers
+	fi	  
+
+	# Install Python dev dependencies
+	if [ "$i" == 'python' ]
+	then
+		
+		# Install pip globally	
+		sudo apt-get install python3-pip
+
+		# Install virtualenv with path access
+		sudo pip3 install virtualenv
+	fi
+  done	  
