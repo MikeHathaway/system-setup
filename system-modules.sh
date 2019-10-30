@@ -68,6 +68,7 @@ ALIASES=$(cat <<"EOF"
 alias code='sudo docker pull mikehathaway/qubes-dev:latest && sudo docker run -$
 alias docker-node='sudo docker pull node && sudo docker run -it node'
 alias dev='bash ~/Projects/system-setup/sytem-setup.sh'
+alias venv='virtualenv -p python3 ~/.venv-py3 && source ~/.venv-py3/bin/activate'
 
 # Add Colors
 export PS1="\e[0;31m[\u@\h \W]\$ \e[m"
