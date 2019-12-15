@@ -24,6 +24,13 @@ fi
 for i
   do
 
+	if [ "$i" == 'qubes' ]
+	  then
+		  
+		echo "configuring split ssh"	  
+		bash ./system-modules.sh configureSplitSSH	
+	fi	
+
 	if [ "$i" == 'crypto' ]
 	  then
 

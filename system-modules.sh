@@ -8,30 +8,30 @@ function installDeps()
   echo "Updating repository list"
   sudo apt-get update
 
-  echo "Creating symlink between https and http package installations"
-  ln -s /usr/lib/apt/methods/http /usr/lib/apt/methods/https
+  #echo "Creating symlink between https and http package installations"
+  #  ln -s /usr/lib/apt/methods/http /usr/lib/apt/methods/https
 
   # Install Buildtools
   echo "Installing Buildtools"
-  sudo apt-get install
+  sudo apt-get -y install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg2 \
-    software-properties-common 
+    software-properties-common \
     git  \
     build-essential \
 
   echo "Installing Shell"
 
   # Install tmux  
-  sudo apt-get install tmux
+  sudo apt-get -y install tmux
 
   # Install Markdown preview dependencies
-  sudo apt-get install grip xdotool
+  sudo apt-get -y install grip xdotool
 
   # Removed unneeded system modules
-  sudo apt autoremove
+  sudo apt -y autoremove
 }
 
 
@@ -67,7 +67,7 @@ ALIASES=$(cat <<"EOF"
 # Alias for running vscode in docker image from ~/Projects directory on host
 alias code='sudo docker pull mikehathaway/qubes-dev:latest && sudo docker run -$
 alias docker-node='sudo docker pull node && sudo docker run -it node'
-alias dev='bash ~/Projects/system-setup/sytem-setup.sh'
+alias dev='bash ~/Projects/system-setup/system-setup.sh'
 alias venv='virtualenv -p python3 ~/.venv-py3 && source ~/.venv-py3/bin/activate'
 
 # Add Colors
@@ -92,7 +92,7 @@ xrdb -merge ~/.Xresources
 function configureVim()
 {
 
-sudo curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 touch ~/.vim/plugins.vim
@@ -118,13 +118,56 @@ echo "${PLUGINS}" > ~/.vim/plugins.vim
 
 touch ~/.vimrc 
 
-echo "source ~/.vim/plugins.vim" > ~/.vim/.vimrc
+echo "source ~/.vim/plugins.vim" > ~/.vimrc
 
 # Install Vim PLugins
 vim +PlugIntstall +qall
 }
 
 
+function configureSplitSSH()
+{
+
+RW_SSH_CONFIG=$(cat << "EOF"
+####################
+# SPLIT SSH CONFIG
+#   for ssh-client VM
+#   file /rw/config/rc.local
+#
+# Uncomment next line to enable ssh agent forwarding to the named VM
+SSH_VAULT_VM="ssh-vault"
+
+if [ "$SSH_VAULT_VM" != "" ]; then
+ export SSH_SOCK=~user/.SSH_AGENT_$SSH_VAULT_VM
+ rm -f "$SSH_SOCK"
+ sudo -u user /bin/sh -c "umask 177 && ncat -k -l -U '$SSH_SOCK' -c 'qrexec-client-vm $SSH_VAULT_VM qubes.SshAgent' &"
+fi
+EOF
+)
+
+echo "${RW_SSH_CONFIG}" | sudo tee -a /rw/config/rc.local
+
+sudo chmod +x /rw/config/rc.local
+
+BASH_SSH_CONFIG=$(cat << "EOF"
+
+#####################
+# SPLIT SSH CONFIG
+#   for ssh-client VM
+#
+# Append this to ~/.bashrc for ssh-vault functionality
+# Set next line to the ssh key vault you want to use
+SSH_VAULT_VM="ssh-vault"
+
+if [ "$SSH_VAULT_VM" != "" ]; then
+ export SSH_AUTH_SOCK=~user/.SSH_AGENT_$SSH_VAULT_VM
+fi
+EOF
+)
+
+echo "${BASH_SSH_CONFIG}" >> ~/.bashrc
+
+}
 
 
 "$@"
