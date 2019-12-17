@@ -22,6 +22,9 @@ if [ $sysFirstInit == init ]
 
 	git config --global user.name "Mike Hathaway"
 	git config --global user.email "mahathaway93@gmail.com"
+
+	# force usage of ssh keys
+	git config --global url."git@github.com:".insteadOf "https://github.com/"
 fi
 
 for i
