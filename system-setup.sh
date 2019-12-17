@@ -19,6 +19,9 @@ if [ $sysFirstInit == init ]
 
     echo "Configring system aliases"
     bash ./system-modules.sh configureShell
+
+	git config --global user.name "Mike Hathaway"
+	git config --global user.email "mahathaway93@gmail.com"
 fi
 
 for i
